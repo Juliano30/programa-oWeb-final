@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada - ONG Platform</title>
+    <link rel="stylesheet" href="/programa-oWeb-final/assets/css/style.css">
+</head>
+<body>
+    <main>
+        <h1>Página não encontrada</h1>
+        <p>Desculpe, a página que você está procurando não existe.</p>
+        <a href="/programa-oWeb-final/" class="button">Voltar para a página inicial</a>
+    </main>
+    <script>
+        // Redirecionar para a página inicial se o caminho estiver incorreto
+        if (window.location.pathname.indexOf('/programa-oWeb-final/') === -1) {
+            window.location.href = '/programa-oWeb-final/';
+        }
+    </script>
+</body>
+</html>

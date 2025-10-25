@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteBase /programa-oWeb-final/
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /programa-oWeb-final/index.html [L]
