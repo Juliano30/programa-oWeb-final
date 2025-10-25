@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONG Amigão - Proteção Animal</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/programa-oWeb-final/assets/css/style.css">
 </head>
 <body>
     <div class="main-container">
@@ -32,16 +32,16 @@
                         </button>
 
                         <ul class="nav-menu">
-                            <li><a href="#home" class="nav-link" onclick="navigate('home')">Início</a></li>
+                            <li><a href="/programa-oWeb-final/" class="nav-link" onclick="navigate('home')">Início</a></li>
                             <li class="nav-dropdown">
-                                <a href="#projects" class="nav-link" onclick="navigate('projects')">Projetos</a>
+                                <a href="/programa-oWeb-final/projects" class="nav-link" onclick="navigate('projects')">Projetos</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#projects" class="dropdown-item" onclick="navigate('projects', 'resgate')">Resgate</a></li>
-                                    <li><a href="#projects" class="dropdown-item" onclick="navigate('projects', 'adocao')">Adoção</a></li>
-                                    <li><a href="#projects" class="dropdown-item" onclick="navigate('projects', 'castracao')">Castração</a></li>
+                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="navigate('projects', 'resgate')">Resgate</a></li>
+                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="navigate('projects', 'adocao')">Adoção</a></li>
+                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="navigate('projects', 'castracao')">Castração</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#register" class="nav-link" onclick="navigate('register')">Cadastro</a></li>
+                            <li><a href="/programa-oWeb-final/register" class="nav-link" onclick="navigate('register')">Cadastro</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -225,7 +225,7 @@
                 <div class="container text-center">
                     <h1 class="section-title">Página não encontrada</h1>
                     <p class="section-description">A página que você está procurando não existe.</p>
-                    <a href="/" class="btn btn-primary mt-3" data-link>Voltar para a página inicial</a>
+                    <a href="/programa-oWeb-final/" class="btn btn-primary mt-3" data-link>Voltar para a página inicial</a>
                 </div>
             </section>
         </main>
@@ -241,7 +241,12 @@
 
     <!-- Scripts -->
     <script>
+        const BASE_URL = '/programa-oWeb-final';
+        
         function navigate(page, section = null) {
+            // Atualizar a URL do navegador
+            const newPath = page === 'home' ? BASE_URL + '/' : BASE_URL + '/' + page;
+            history.pushState(null, '', newPath);
             const app = document.getElementById('app');
             let template;
 
