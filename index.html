@@ -241,7 +241,43 @@
 
     <!-- Scripts -->
     <script>
-        function loadContent(page, section = null) {
+        function loadPage(page, section = null) {
+            // Prevenir comportamento padrão do link
+            event.preventDefault();
+            
+            // Carregar o template
+            const content = document.getElementById(`template-${page}`);
+            if (content) {
+                document.getElementById('app').innerHTML = content.innerHTML;
+                
+                // Se houver uma seção específica em projetos
+                if (section && page === 'projects') {
+                    setTimeout(() => {
+                        const element = document.getElementById(section);
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 100);
+                }
+
+                // Inicializar formulário se estivermos na página de cadastro
+                if (page === 'register') {
+                    const form = document.getElementById('volunteerForm');
+                    if (form) {
+                        form.onsubmit = (e) => {
+                            e.preventDefault();
+                            alert('Cadastro enviado com sucesso!');
+                            form.reset();
+                        };
+                    }
+                }
+            }
+        }
+
+        // Carregar a página inicial quando o documento estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPage('home');
+        });
             const app = document.getElementById('app');
             const template = document.getElementById('template-' + page);
 
