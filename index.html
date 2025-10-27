@@ -32,16 +32,16 @@
                         </button>
 
                         <ul class="nav-menu">
-                            <li><a href="/programa-oWeb-final/" class="nav-link" onclick="navigate('home')">Início</a></li>
+                            <li><a href="/programa-oWeb-final/" class="nav-link" onclick="event.preventDefault(); navigate('home')">Início</a></li>
                             <li class="nav-dropdown">
-                                <a href="/programa-oWeb-final/projects" class="nav-link" onclick="navigate('projects')">Projetos</a>
+                                <a href="/programa-oWeb-final/projects" class="nav-link" onclick="event.preventDefault(); navigate('projects')">Projetos</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="navigate('projects', 'resgate')">Resgate</a></li>
-                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="navigate('projects', 'adocao')">Adoção</a></li>
-                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="navigate('projects', 'castracao')">Castração</a></li>
+                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'resgate')">Resgate</a></li>
+                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'adocao')">Adoção</a></li>
+                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'castracao')">Castração</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/programa-oWeb-final/register" class="nav-link" onclick="navigate('register')">Cadastro</a></li>
+                            <li><a href="/programa-oWeb-final/register" class="nav-link" onclick="event.preventDefault(); navigate('register')">Cadastro</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -244,7 +244,9 @@
         const BASE_URL = '/programa-oWeb-final';
         
         function navigate(page, section = null) {
-            // Atualizar a URL do navegador
+            event.preventDefault();
+            
+            // Atualizar a URL do navegador sem mudar de página
             const newPath = page === 'home' ? BASE_URL + '/' : BASE_URL + '/' + page;
             history.pushState(null, '', newPath);
             const app = document.getElementById('app');
@@ -370,9 +372,16 @@
             return container;
         }
 
+        // Manipular eventos de navegação do navegador
+        window.addEventListener('popstate', () => {
+            const path = window.location.pathname.replace(BASE_URL, '').replace('/', '') || 'home';
+            navigate(path);
+        });
+
         // Inicialização quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', () => {
-            navigate('home');
+            const path = window.location.pathname.replace(BASE_URL, '').replace('/', '') || 'home';
+            navigate(path);
         });
     </script>
     <script src="/programa-oWeb-final/assets/js/github-pages-fix.js"></script>
