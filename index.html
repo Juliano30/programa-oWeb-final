@@ -32,16 +32,16 @@
                         </button>
 
                         <ul class="nav-menu">
-                            <li><a href="#" class="nav-link" onclick="event.preventDefault(); navigate('/')">Início</a></li>
+                            <li><a href="#" class="nav-link" onclick="loadContent('home')">Início</a></li>
                             <li class="nav-dropdown">
-                                <a href="#" class="nav-link" onclick="event.preventDefault(); navigate('projects')">Projetos</a>
+                                <a href="#" class="nav-link" onclick="loadContent('projects')">Projetos</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'resgate')">Resgate</a></li>
-                                    <li><a href="#" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'adocao')">Adoção</a></li>
-                                    <li><a href="#" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'castracao')">Castração</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="loadContent('projects', 'resgate')">Resgate</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="loadContent('projects', 'adocao')">Adoção</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="loadContent('projects', 'castracao')">Castração</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#" class="nav-link" onclick="event.preventDefault(); navigate('register')">Cadastro</a></li>
+                            <li><a href="#" class="nav-link" onclick="loadContent('register')">Cadastro</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -240,8 +240,37 @@
     </template>
 
     <!-- Scripts -->
-    <script src="/programa-oWeb-final/assets/js/spa-router.js"></script>
     <script>
+        function loadContent(page, section = null) {
+            const app = document.getElementById('app');
+            const template = document.getElementById('template-' + page);
+
+            if (template) {
+                app.innerHTML = template.innerHTML;
+                
+                // Se houver uma seção específica e estivermos na página projetos
+                if (section && page === 'projects') {
+                    setTimeout(() => {
+                        const element = document.getElementById(section);
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 100);
+                }
+
+                // Se estivermos na página de cadastro, inicializar formulários
+                if (page === 'register') {
+                    initializeForms();
+                }
+            } else {
+                app.innerHTML = document.getElementById('template-404').innerHTML;
+            }
+        }
+
+        // Carregar a página inicial quando o documento estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            loadContent('home');
+        });
         // Funções de validação e formulário
             if (event) event.preventDefault();
             
