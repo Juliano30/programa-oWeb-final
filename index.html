@@ -36,9 +36,9 @@
                             <li class="nav-dropdown">
                                 <a href="/programa-oWeb-final/projects" class="nav-link" onclick="event.preventDefault(); navigate('projects')">Projetos</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'resgate')">Resgate</a></li>
-                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'adocao')">Adoção</a></li>
-                                    <li><a href="/programa-oWeb-final/projects" class="dropdown-item" onclick="event.preventDefault(); navigate('projects', 'castracao')">Castração</a></li>
+                                    <li><a href="javascript:void(0)" class="dropdown-item" onclick="navigate('projects', 'resgate')">Resgate</a></li>
+                                    <li><a href="javascript:void(0)" class="dropdown-item" onclick="navigate('projects', 'adocao')">Adoção</a></li>
+                                    <li><a href="javascript:void(0)" class="dropdown-item" onclick="navigate('projects', 'castracao')">Castração</a></li>
                                 </ul>
                             </li>
                             <li><a href="/programa-oWeb-final/register" class="nav-link" onclick="event.preventDefault(); navigate('register')">Cadastro</a></li>
@@ -244,11 +244,54 @@
         const BASE_URL = '/programa-oWeb-final';
         
         function navigate(page, section = null) {
-            event.preventDefault();
+            if (event) event.preventDefault();
             
+            // Primeiro, carregamos o template correto
+            const app = document.getElementById('app');
+            let template;
+
+            switch(page) {
+                case 'home':
+                    template = document.getElementById('template-home');
+                    break;
+                case 'projects':
+                    template = document.getElementById('template-projects');
+                    break;
+                case 'register':
+                    template = document.getElementById('template-register');
+                    break;
+                default:
+                    template = document.getElementById('template-404');
+            }
+
+            if (template) {
+                app.innerHTML = template.innerHTML;
+                // Se estamos na página de projetos e temos uma seção específica
+                if (section && page === 'projects') {
+                    setTimeout(() => {
+                        const sectionElement = document.getElementById(section);
+                        if (sectionElement) {
+                            sectionElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 100);
+                }
+
+                // Inicializar formulários se estivermos na página de cadastro
+                if (page === 'register') {
+                    initializeForms();
+                }
+            } else {
+                app.innerHTML = document.getElementById('template-404').innerHTML;
+            }
+
             // Atualizar a URL do navegador sem mudar de página
             const newPath = page === 'home' ? BASE_URL + '/' : BASE_URL + '/' + page;
-            history.pushState(null, '', newPath);
+            if (section) {
+                history.pushState(null, '', newPath + '#' + section);
+            } else {
+                history.pushState(null, '', newPath);
+            }
+        }
             const app = document.getElementById('app');
             let template;
 
